@@ -1,12 +1,9 @@
 import React from "react";
-import { Home } from "pages/Home";
+
+import Router from "routes";
 
 const App = (): JSX.Element => {
-  return (
-    <div className="App">
-      <Home />
-    </div>
-  );
+  return <Router />;
 };
 
 export default App;

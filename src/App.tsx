@@ -3,11 +3,14 @@ import { ThemeProvider, DefaultTheme } from "styled-components";
 import theme from "styles/theme";
 import Router from "routes";
 import GlobalStyle from "styles/global";
+import { BooksProvider } from "context/books";
 
 const App = (): JSX.Element => {
   return (
     <ThemeProvider theme={theme as DefaultTheme}>
-      <Router />
+      <BooksProvider>
+        <Router />
+      </BooksProvider>
       <GlobalStyle />
     </ThemeProvider>
   );

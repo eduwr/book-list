@@ -10,7 +10,8 @@ import { HeaderContainer } from "components/HeaderContainer";
 import { MenuIcon } from "components/Icons";
 import { SearchButton } from "components/SearchButton";
 import { Input } from "components/SearchInput";
-import { Book, BookCover, BookListContainer } from "./styles";
+import Loader from "react-loader-spinner";
+import { Book, BookCover, BookListContainer, LoadMoreBtn } from "./styles";
 import defaultThumb from "../../assets/defaultThumb.png";
 
 export const BookList = (): JSX.Element => {
@@ -19,9 +20,9 @@ export const BookList = (): JSX.Element => {
   const [query, setQuery] = useState("Harry Potter");
   const [searchSentence, setSearchSentence] = useState("Harry Potter");
   const { data: books } = useBooksState();
-
+  const [bookIndex, setbookIndex] = useState(0);
   const booksDispatch = useBooksDispatch();
-
+  const [loadingMore, setLoadingMore] = useState(false);
   const harryPotter = "harry potter";
 
   useEffect(() => {
@@ -30,8 +31,8 @@ export const BookList = (): JSX.Element => {
       try {
         const response = await ApiService.getInstance().fetchBooks({
           query,
-          maxResults: 8,
-          startIndex: 1,
+          maxResults: 12,
+          startIndex: 0,
         });
 
         booksDispatch({
@@ -46,12 +47,39 @@ export const BookList = (): JSX.Element => {
     };
 
     fetchBooks();
-  }, [query]);
+  }, [query, booksDispatch]);
 
-  const handleSelectBook = (e: ButtonClickEvent): void => {
+  const handleLoadMore = async (e: ButtonClickEvent): Promise<void> => {
     e.preventDefault();
+    setLoadingMore(true);
 
-    push("books/1");
+    try {
+      if (books.totalItems <= books.items.length) {
+        return;
+      }
+
+      const response = await ApiService.getInstance().fetchBooks({
+        query,
+        maxResults: 12,
+        startIndex: bookIndex + 1,
+      });
+
+      const currentBooks = [...books.items];
+
+      const bookSet = new Set([...currentBooks, ...response.data.items]);
+
+      booksDispatch({
+        type: BooksActionTypes.SET_BOOKS,
+        payload: {
+          ...response.data,
+          items: [...bookSet],
+        },
+      });
+    } catch (err) {
+      // handle err
+    } finally {
+      setLoadingMore(false);
+    }
   };
 
   const handleSearch = (): void => {
@@ -77,16 +105,28 @@ export const BookList = (): JSX.Element => {
               : defaultThumb;
 
             return (
-              <Book key={book.id}>
+              <Book
+                key={book.id + book.volumeInfo.title + Math.random() * 1000}
+              >
                 <BookCover src={imgLink} alt={book.volumeInfo?.title || ""} />
               </Book>
             );
           })}
         </BookListContainer>
       )}
-      <button type="button" onClick={handleSelectBook}>
-        Select harry book
-      </button>
+      {books.items && !loading && (
+        <LoadMoreBtn
+          type="button"
+          onClick={handleLoadMore}
+          disabled={books.totalItems <= books.items.length}
+        >
+          {loadingMore ? (
+            <Loader type="Circles" width={24} height={24} color="white" />
+          ) : (
+            "LOAD MORE"
+          )}
+        </LoadMoreBtn>
+      )}
     </PageContainer>
   );
 };

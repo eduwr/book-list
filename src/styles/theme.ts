@@ -5,6 +5,7 @@ export const yellowTheme = {
   textColor: "#594E02",
   buyButtonColor: "#549AE6",
   likeButtonColor: "#E05568",
+  buttonDisabled: "grey",
 };
 
 const theme: DefaultTheme = {

@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ButtonClickEvent, GetBooksResponseType } from "@types";
@@ -10,6 +11,7 @@ import { MenuIcon } from "components/Icons";
 import { SearchButton } from "components/SearchButton";
 import { Input } from "components/SearchInput";
 import { Book, BookCover, BookListContainer } from "./styles";
+import defaultThumb from "../../assets/defaultThumb.png";
 
 export const BookList = (): JSX.Element => {
   const [loading, setLoading] = useState(false);
@@ -70,16 +72,13 @@ export const BookList = (): JSX.Element => {
       {books.items && !loading && (
         <BookListContainer>
           {books.items.map((book) => {
+            const imgLink = book.volumeInfo?.imageLinks?.smallThumbnail
+              ? book.volumeInfo?.imageLinks?.smallThumbnail
+              : defaultThumb;
+
             return (
               <Book key={book.id}>
-                <BookCover
-                  src={
-                    book.volumeInfo?.imageLinks?.smallThumbnail ||
-                    book.volumeInfo?.imageLinks?.thumbnail ||
-                    ""
-                  }
-                  alt={book.volumeInfo?.title || ""}
-                />
+                <BookCover src={imgLink} alt={book.volumeInfo?.title || ""} />
               </Book>
             );
           })}

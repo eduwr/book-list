@@ -5,7 +5,8 @@ import ApiService from "services/ApiService";
 import { useBooksDispatch, useBooksState } from "hooks/books";
 import { BooksActionTypes } from "context/books";
 import { PageContainer } from "components/PageContainer";
-import { Header } from "components/HeaderContainer";
+import { HeaderContainer } from "components/HeaderContainer";
+import { MenuIcon, SearchIcon } from "components/Icons";
 import { Book, BookCover, BookListContainer } from "./styles";
 
 export const BookList = (): JSX.Element => {
@@ -50,8 +51,11 @@ export const BookList = (): JSX.Element => {
 
   return (
     <PageContainer>
-      <Header />
-      <h1>Book List Page</h1>
+      <HeaderContainer
+        left={<MenuIcon />}
+        middle={<h1>Book List Page</h1>}
+        right={<SearchIcon />}
+      />
 
       {books.items && (
         <BookListContainer>

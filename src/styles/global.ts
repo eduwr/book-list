@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import theme from "./theme";
 
 const GlobalStyle = createGlobalStyle`
     * {
@@ -15,6 +16,20 @@ const GlobalStyle = createGlobalStyle`
     #root {
         min-height: 100vh;
         background-color: purple;
+    }
+
+    h1, h2, h3, li {
+        color: ${theme.yellow.textColor}
+    }
+
+    button {
+        padding: 0;
+        border: none;
+        background: none;
+    }
+
+    button:focus {
+        outline:0;
     }
 `;
 

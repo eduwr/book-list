@@ -6,6 +6,7 @@ import { useBooksDispatch, useBooksState } from "hooks/books";
 import { BooksActionTypes } from "context/books";
 import { PageContainer } from "components/PageContainer";
 import { Header } from "components/HeaderContainer";
+import { Book, BookCover, BookListContainer } from "./styles";
 
 export const BookList = (): JSX.Element => {
   const [loading, setLoading] = useState(false);
@@ -53,12 +54,20 @@ export const BookList = (): JSX.Element => {
       <h1>Book List Page</h1>
 
       {books.items && (
-        <ul>
-          <h2>{books.totalItems}</h2>
+        <BookListContainer>
           {books.items.map((book) => {
-            return <li key={book.id}>{book.volumeInfo.title}</li>;
+            const {
+              title,
+              imageLinks: { smallThumbnail },
+            } = book.volumeInfo;
+
+            return (
+              <Book key={book.id}>
+                <BookCover src={smallThumbnail} alt={title} />
+              </Book>
+            );
           })}
-        </ul>
+        </BookListContainer>
       )}
       <button type="button" onClick={handleSelectBook}>
         Select harry book

@@ -31,6 +31,16 @@ const GlobalStyle = createGlobalStyle`
     button:focus {
         outline:0;
     }
+
+    input {
+        border: none;
+        background: none;
+        color: ${theme.yellow.textColor}
+    }
+
+    input:focus {
+        outline: none;
+    }
 `;
 
 export default GlobalStyle;

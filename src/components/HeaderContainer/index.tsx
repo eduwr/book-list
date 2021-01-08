@@ -2,17 +2,11 @@ import React, { ReactNode } from "react";
 
 import styled from "styled-components";
 
-interface Props {
-  middle?: JSX.Element;
-  left?: JSX.Element;
-  right?: JSX.Element;
-}
-
 const Divider = styled.div`
   height: 2px;
   width: 40%;
   position: absolute;
-  bottom: 0;
+  bottom: 8px;
   left: calc(50% - 20%);
   opacity: 0.5;
   border-radius: 1px;
@@ -30,15 +24,13 @@ const Container = styled.div`
 `;
 
 export const HeaderContainer = ({
-  middle,
-  left,
-  right,
-}: Props): JSX.Element => {
+  children,
+}: {
+  children: ReactNode;
+}): JSX.Element => {
   return (
     <Container>
-      {left}
-      {middle}
-      {right}
+      {children}
       <Divider />
     </Container>
   );

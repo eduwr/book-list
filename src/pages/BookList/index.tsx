@@ -6,13 +6,16 @@ import { useBooksDispatch, useBooksState } from "hooks/books";
 import { BooksActionTypes } from "context/books";
 import { PageContainer } from "components/PageContainer";
 import { HeaderContainer } from "components/HeaderContainer";
-import { MenuIcon, SearchIcon } from "components/Icons";
+import { MenuIcon } from "components/Icons";
+import { SearchButton } from "components/SearchButton";
+import { Input } from "components/SearchInput";
 import { Book, BookCover, BookListContainer } from "./styles";
 
 export const BookList = (): JSX.Element => {
   const [loading, setLoading] = useState(false);
   const { push } = useHistory();
-
+  const [query, setQuery] = useState("Harry Potter");
+  const [searchSentence, setSearchSentence] = useState("Harry Potter");
   const { data: books } = useBooksState();
 
   const booksDispatch = useBooksDispatch();
@@ -24,7 +27,7 @@ export const BookList = (): JSX.Element => {
       setLoading(true);
       try {
         const response = await ApiService.getInstance().fetchBooks({
-          query: "harry",
+          query,
           maxResults: 8,
           startIndex: 1,
         });
@@ -41,7 +44,7 @@ export const BookList = (): JSX.Element => {
     };
 
     fetchBooks();
-  }, []);
+  }, [query]);
 
   const handleSelectBook = (e: ButtonClickEvent): void => {
     e.preventDefault();
@@ -49,25 +52,34 @@ export const BookList = (): JSX.Element => {
     push("books/1");
   };
 
+  const handleSearch = (): void => {
+    setQuery(searchSentence);
+  };
+
   return (
     <PageContainer>
-      <HeaderContainer
-        left={<MenuIcon />}
-        middle={<h1>Book List Page</h1>}
-        right={<SearchIcon />}
-      />
+      <HeaderContainer>
+        <MenuIcon />
+        <Input
+          value={searchSentence}
+          onChange={(e) => setSearchSentence(e.target.value)}
+        />
+        <SearchButton onClick={handleSearch} />
+      </HeaderContainer>
 
-      {books.items && (
+      {books.items && !loading && (
         <BookListContainer>
           {books.items.map((book) => {
-            const {
-              title,
-              imageLinks: { smallThumbnail },
-            } = book.volumeInfo;
-
             return (
               <Book key={book.id}>
-                <BookCover src={smallThumbnail} alt={title} />
+                <BookCover
+                  src={
+                    book.volumeInfo?.imageLinks?.smallThumbnail ||
+                    book.volumeInfo?.imageLinks?.thumbnail ||
+                    ""
+                  }
+                  alt={book.volumeInfo?.title || ""}
+                />
               </Book>
             );
           })}

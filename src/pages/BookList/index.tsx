@@ -24,7 +24,7 @@ export const BookList = (): JSX.Element => {
   const [bookIndex, setbookIndex] = useState(0);
   const [loadingMore, setLoadingMore] = useState(false);
 
-  const { push } = useHistory();
+  const { push, goBack } = useHistory();
 
   useLayoutEffect(() => {
     const fetchBooks = async (): Promise<void> => {
@@ -106,7 +106,15 @@ export const BookList = (): JSX.Element => {
   return (
     <PageContainer>
       <HeaderContainer>
-        <MenuIcon />
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            push("/");
+          }}
+        >
+          <MenuIcon />
+        </button>
         <Input
           value={searchSentence}
           onChange={(e) => setSearchSentence(e.target.value)}

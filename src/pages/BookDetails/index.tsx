@@ -18,6 +18,7 @@ export const BookDetails = (): JSX.Element => {
   const [infoLink, setInfoLink] = useState("");
   const { data: books } = useBooksState();
   const [loading, setLoading] = useState(true);
+
   const handleGoBack = (e: ButtonClickEvent): void => {
     e.preventDefault();
     goBack();
@@ -29,8 +30,10 @@ export const BookDetails = (): JSX.Element => {
     const selectedBook = books.items.find((item) => item.id === id);
 
     if (!selectedBook) {
-      alert("Book not found! Try again");
+      alert("Oops! Something Wrong, book not found! Try again");
+
       setLoading(false);
+      goBack();
       return;
     }
 
@@ -48,11 +51,11 @@ export const BookDetails = (): JSX.Element => {
         const response = await ApiService.getInstance().fetchBookInfo({
           link: infoLink,
         });
-        console.log(response.data);
 
         setBook(response.data);
       } catch (err) {
-        // handle err
+        alert("Server unavailable, try again later");
+        goBack();
       } finally {
         setLoading(false);
       }
@@ -80,7 +83,6 @@ export const BookDetails = (): JSX.Element => {
         }
         stars={book?.volumeInfo.averageRating}
         title={book?.volumeInfo.title}
-        liked
         buyLink={book?.saleInfo.buyLink}
       />
       <button type="button" onClick={handleGoBack}>

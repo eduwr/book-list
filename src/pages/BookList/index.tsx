@@ -1,5 +1,5 @@
 /* eslint-disable global-require */
-import React, { useEffect, useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { ButtonClickEvent, GetBooksResponseType } from "@types";
 import ApiService from "services/ApiService";
@@ -26,7 +26,7 @@ export const BookList = (): JSX.Element => {
   const { data: books } = useBooksState();
   const booksDispatch = useBooksDispatch();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const fetchBooks = async (): Promise<void> => {
       setLoading(true);
       try {

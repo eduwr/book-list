@@ -1,6 +1,8 @@
+import React, { useMemo } from "react";
 import { Fav } from "components/Icons";
 import { Stars } from "components/Stars";
-import React, { ReactNode } from "react";
+import { useBooksDispatch, useBooksState } from "hooks/books";
+import { BooksActionTypes } from "context/books";
 import {
   Container,
   BookCover,
@@ -24,7 +26,6 @@ interface Props {
   price?: number;
   authors?: string[];
   stars?: number;
-  liked?: boolean;
   buyLink?: string;
   id?: string;
 }
@@ -36,10 +37,12 @@ export const BookCard = ({
   price,
   stars,
   title,
-  liked,
   buyLink,
   id,
 }: Props): JSX.Element => {
+  const { likes } = useBooksState();
+  const dispatchBooks = useBooksDispatch();
+
   // reduce authors array into a string with authors name
   const parseAuthors = (list: string[] | undefined): string => {
     if (!list) {
@@ -60,6 +63,19 @@ export const BookCard = ({
 
     return parsed;
   };
+
+  const handleLike = (): void => {
+    if (!id) {
+      return;
+    }
+
+    dispatchBooks({
+      type: BooksActionTypes.LIKE_OR_DISLIKE_BOOK,
+      payload: id,
+    });
+  };
+
+  const liked = useMemo(() => likes.includes(id || ""), [id, likes]);
 
   return (
     <Container>
@@ -85,8 +101,8 @@ export const BookCard = ({
         </RightBox>
         <ButtonsWrapper>
           <BuyButton disabled={!!buyLink}>BUY</BuyButton>
-          <LikeButton>
-            <Fav size={20} />
+          <LikeButton onClick={handleLike}>
+            <Fav size={20} outlined={!liked} />
           </LikeButton>
         </ButtonsWrapper>
       </ContentWrapper>

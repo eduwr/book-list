@@ -1,12 +1,14 @@
 import { GetBooksResponseType } from "@types";
 import React, { createContext } from "react";
 
+// Declare actions types
 export enum BooksActionTypes {
   SET_BOOKS = "SET_BOOKS",
   SET_SEARCH_QUERY = "SET_SEARCH_QUERY",
   LIKE_OR_DISLIKE_BOOK = "LIKE_OR_DISLIKE_BOOK",
 }
 
+// Declare actions
 type BooksActions =
   | {
       type: BooksActionTypes.SET_BOOKS;
@@ -29,11 +31,13 @@ export type State = {
 };
 type ProviderProps = { children: React.ReactNode };
 
+// Create books contexts
 export const BooksStateContext = createContext<State | undefined>(undefined);
 export const BooksDispatchContext = createContext<Dispatch | undefined>(
   undefined
 );
 
+// the reducer changes the state according to the action type
 const booksReducer = (state: State, action: BooksActions): State => {
   switch (action.type) {
     case BooksActionTypes.SET_BOOKS:

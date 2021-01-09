@@ -7,6 +7,9 @@ interface FetchBooksProps {
   maxResults?: number;
 }
 
+// exports a class with the instance of axios,
+// The singleton pattern ensures a single instance of axios.
+
 export class ApiService {
   private static instance: ApiService;
 

@@ -30,12 +30,11 @@ export const BookDetails = (): JSX.Element => {
 
   const ref = useRef<HTMLDivElement>(null);
 
+  // searches for a book in the books context and set this book in page state
   useEffect(() => {
     const selectedBook = books.items.find((item) => item.id === id);
 
     if (!selectedBook) {
-      alert("Oops! Something Wrong, book not found! Try again");
-
       setLoading(false);
       goBack();
       return;
@@ -44,6 +43,7 @@ export const BookDetails = (): JSX.Element => {
     setInfoLink(selectedBook.selfLink);
   }, []);
 
+  // Method triggered when book is loaded, it fetches selected book details from google api
   useEffect(() => {
     const fetchBookInfo = async (): Promise<void> => {
       setLoading(true);
@@ -58,7 +58,6 @@ export const BookDetails = (): JSX.Element => {
 
         setBook(response.data);
       } catch (err) {
-        alert("Server unavailable, try again later");
         goBack();
       } finally {
         setLoading(false);
@@ -70,6 +69,7 @@ export const BookDetails = (): JSX.Element => {
 
   const description = useMemo(() => book?.volumeInfo.description, [book]);
 
+  // insert book description in BookDescriptionContainer since the response is an html string
   useEffect(() => {
     if (ref && ref.current && description) {
       ref.current.innerHTML = description;

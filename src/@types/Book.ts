@@ -1,3 +1,4 @@
+// Declare book types
 interface ImageLinks {
   smallThumbnail: string;
   thumbnail: string;

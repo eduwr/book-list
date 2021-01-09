@@ -8,6 +8,7 @@ import { NavButton, AppDescription } from "./styles";
 export const Home = (): JSX.Element => {
   const { push } = useHistory();
 
+  // navigate to booklist page
   const handleNavigation = (e: ButtonClickEvent): void => {
     e.preventDefault();
 

@@ -7,6 +7,8 @@ import {
   State,
 } from "context/books";
 
+// create hooks to access Dispatch and Books context
+
 const useBooksState = (): State => {
   const context = useContext(BooksStateContext);
   if (context === undefined) {
@@ -14,6 +16,7 @@ const useBooksState = (): State => {
   }
   return context;
 };
+
 const useBooksDispatch = (): Dispatch => {
   const context = useContext(BooksDispatchContext);
   if (context === undefined) {

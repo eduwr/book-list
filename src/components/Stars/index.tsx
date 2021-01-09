@@ -14,6 +14,7 @@ const Container = styled.div`
 `;
 
 export const Stars = ({ count, size }: Props): JSX.Element => {
+  // renders stars according to the count number
   const RenderStars = (): JSX.Element[] => {
     const acc: JSX.Element[] = [];
 

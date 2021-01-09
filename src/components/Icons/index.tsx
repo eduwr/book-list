@@ -5,6 +5,8 @@ interface Props {
   size?: number;
 }
 
+// Icons were created as React Components, this is not the best approach for a big projects, but in this case it was fine.
+
 export const MenuIcon = ({ size }: Props): JSX.Element => {
   const s = size || 24;
   return (

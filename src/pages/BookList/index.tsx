@@ -1,5 +1,5 @@
 /* eslint-disable global-require */
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect, useRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { ButtonClickEvent, GetBooksResponseType } from "@types";
 import ApiService from "services/ApiService";
@@ -24,7 +24,18 @@ export const BookList = (): JSX.Element => {
   const [bookIndex, setbookIndex] = useState(0);
   const [loadingMore, setLoadingMore] = useState(false);
 
-  const { push, goBack } = useHistory();
+  const { push } = useHistory();
+
+  const ref = useRef<HTMLInputElement>(null);
+
+  // Focus on Input when page Load
+  useEffect(() => {
+    ref.current?.focus();
+  }, [ref]);
+
+  // Fetch book list when query string changes,
+  // useEffect makes the component twinkle while using navigator go back button from book details page
+  // so I useLayoutEffect to avoid this
 
   useLayoutEffect(() => {
     const fetchBooks = async (): Promise<void> => {
@@ -50,6 +61,7 @@ export const BookList = (): JSX.Element => {
     fetchBooks();
   }, [query, booksDispatch]);
 
+  // fetch more books from api and set new items into context
   const handleLoadMore = async (e: ButtonClickEvent): Promise<void> => {
     e.preventDefault();
     setLoadingMore(true);
@@ -87,6 +99,7 @@ export const BookList = (): JSX.Element => {
     }
   };
 
+  // Dispatch an action to fetch books based on query string
   const handleSearch = (): void => {
     setQuery(searchSentence);
     booksDispatch({
@@ -95,6 +108,7 @@ export const BookList = (): JSX.Element => {
     });
   };
 
+  // select book clicked and navigate to Details page
   const handleSelectBook = (id: string): void => {
     booksDispatch({
       type: BooksActionTypes.SET_SEARCH_QUERY,
@@ -116,6 +130,7 @@ export const BookList = (): JSX.Element => {
           <MenuIcon />
         </button>
         <Input
+          ref={ref}
           value={searchSentence}
           onChange={(e) => setSearchSentence(e.target.value)}
           onKeyDown={(e) => {

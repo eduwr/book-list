@@ -65,6 +65,7 @@ export const BookCard = ({
     return parsed;
   };
 
+  // Dispatch an action that add or remove book id from like list.
   const handleLike = (): void => {
     if (!id) {
       return;
@@ -81,6 +82,7 @@ export const BookCard = ({
     window.open(buyLink, "_blank");
   };
 
+  // a memoized value to check if the book is liked or not
   const liked = useMemo(() => likes.includes(id || ""), [id, likes]);
 
   return (

@@ -1,7 +1,9 @@
 import { createGlobalStyle } from "styled-components";
-import theme from "./theme";
+import { ThemeInterface } from "./theme";
 
-const GlobalStyle = createGlobalStyle`
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const GlobalStyleFactory = (theme: ThemeInterface) =>
+  createGlobalStyle`
     * {
         margin: 0;
         padding: 0;
@@ -10,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
 
     body {
         min-height: 100vh;
-        background-color: ${theme.yellow.colorBg};
+        background-color: ${theme.colorBg};
     }
 
     #root {
@@ -19,7 +21,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     h1, h2, h3 {
-        color: ${theme.yellow.textColor}
+        color: ${theme.textColor}
     }
 
     button {
@@ -51,7 +53,7 @@ const GlobalStyle = createGlobalStyle`
     input {
         border: none;
         background: none;
-        color: ${theme.yellow.textColor}
+        color: ${theme.textColor}
     }
 
     input:focus {
@@ -65,4 +67,4 @@ const GlobalStyle = createGlobalStyle`
 
 `;
 
-export default GlobalStyle;
+export default GlobalStyleFactory;

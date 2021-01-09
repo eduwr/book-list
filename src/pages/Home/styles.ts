@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const NavButton = styled.button`
-  background-color: ${({ theme }) => theme.yellow.likeButtonColor};
+  background-color: ${({ theme }) => theme.likeButtonColor};
   height: 48px;
   padding: 0 24px;
   border-radius: 24px;

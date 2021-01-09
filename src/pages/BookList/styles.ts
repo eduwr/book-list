@@ -34,7 +34,7 @@ export const BookCover = styled.img`
 
 export const LoadMoreBtn = styled.button`
   background-color: ${({ theme, disabled }) =>
-    disabled ? theme.yellow.buttonDisabled : theme.yellow.buyButtonColor};
+    disabled ? theme.buttonDisabled : theme.buyButtonColor};
   height: 48px;
   width: 50%;
   border-radius: 16px;

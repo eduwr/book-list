@@ -18,7 +18,7 @@ export const LeftBox = styled.div`
 
 export const CountPages = styled.p`
   margin-top: 32px;
-  color: ${({ theme }) => theme.yellow.textColor};
+  color: ${({ theme }) => theme.textColor};
   opacity: 0.5;
 `;
 
@@ -34,7 +34,7 @@ export const BookCover = styled.img`
   object-fit: cover;
   height: 170px;
   width: 120px;
-  box-shadow: ${({ theme }) => theme.yellow.boxShadowBlack};
+  box-shadow: ${({ theme }) => theme.boxShadowBlack};
 `;
 
 export const ContentWrapper = styled.div`
@@ -54,7 +54,7 @@ export const Title = styled.h3`
 `;
 
 export const Authors = styled.p`
-  color: ${({ theme }) => theme.yellow.textColor};
+  color: ${({ theme }) => theme.textColor};
   opacity: 0.5;
   font-weight: lighter;
   font-size: 1rem;
@@ -77,7 +77,7 @@ export const ButtonsWrapper = styled.div`
 
 export const BuyButton = styled.button`
   height: 32px;
-  background-color: ${({ theme }) => theme.yellow.buyButtonColor};
+  background-color: ${({ theme }) => theme.buyButtonColor};
   text-decoration: none;
   color: white;
   font-size: 16px;
@@ -86,7 +86,7 @@ export const BuyButton = styled.button`
   padding: 8px 24px;
   border-radius: 24px;
   opacity: 0.85;
-  box-shadow: ${({ theme }) => theme.yellow.boxShadowBlue};
+  box-shadow: ${({ theme }) => theme.boxShadowBlue};
   transition: all 300ms ease;
 
   &:hover {
@@ -104,7 +104,7 @@ export const LikeButton = styled.button`
   height: 32px;
   width: 32px;
   border-radius: 16px;
-  background-color: ${({ theme }) => theme.yellow.likeButtonColor};
+  background-color: ${({ theme }) => theme.likeButtonColor};
   display: flex;
   justify-content: center;
   align-items: center;

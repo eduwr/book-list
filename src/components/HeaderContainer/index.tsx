@@ -10,7 +10,7 @@ const Divider = styled.div`
   left: calc(50% - 20%);
   opacity: 0.5;
   border-radius: 1px;
-  background-color: ${({ theme }) => theme.yellow.textColor};
+  background-color: ${({ theme }) => theme.textColor};
 `;
 
 const Container = styled.div`

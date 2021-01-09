@@ -1,11 +1,8 @@
 import "styled-components";
-import theme, { yellowTheme } from "styles/theme";
-
-type YellowTheme = ReturnType<() => typeof yellowTheme>;
+import theme, { ThemeInterface } from "styles/theme";
 
 // Declare theme based on yellowTheme
 declare module "styled-components" {
-  export interface DefaultTheme {
-    yellow: YellowTheme;
-  }
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  export interface DefaultTheme extends ThemeInterface {}
 }

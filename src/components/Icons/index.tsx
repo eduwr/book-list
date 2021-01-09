@@ -1,5 +1,5 @@
 import React from "react";
-import theme from "styles/theme";
+import Theme from "styles/theme";
 
 interface Props {
   size?: number;
@@ -8,6 +8,8 @@ interface Props {
 // Icons were created as React Components, this is not the best approach for a big projects, but in this case it was fine.
 
 export const MenuIcon = ({ size }: Props): JSX.Element => {
+  const theme = Theme.getInstance().getTheme("yellow");
+
   const s = size || 24;
   return (
     <svg
@@ -15,7 +17,7 @@ export const MenuIcon = ({ size }: Props): JSX.Element => {
       height={s}
       viewBox="0 0 24 24"
       width={s}
-      fill={theme.yellow.textColor}
+      fill={theme.textColor}
     >
       <path d="M0 0h24v24H0z" fill="none" />
       <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
@@ -25,13 +27,15 @@ export const MenuIcon = ({ size }: Props): JSX.Element => {
 
 export const SearchIcon = ({ size }: Props): JSX.Element => {
   const s = size || 24;
+  const theme = Theme.getInstance().getTheme("yellow");
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       height={s}
       viewBox="0 0 24 24"
       width={s}
-      fill={theme.yellow.textColor}
+      fill={theme.textColor}
     >
       <path d="M0 0h24v24H0z" fill="none" />
       <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
@@ -45,6 +49,7 @@ interface ConditionalIconProps extends Props {
 
 export const Star = ({ size, outlined }: ConditionalIconProps): JSX.Element => {
   const s = size || 24;
+  const theme = Theme.getInstance().getTheme("yellow");
 
   if (outlined) {
     return (
@@ -55,7 +60,7 @@ export const Star = ({ size, outlined }: ConditionalIconProps): JSX.Element => {
         width={s}
       >
         <path
-          fill={theme.yellow.textColor}
+          fill={theme.textColor}
           d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
         />
       </svg>
@@ -72,7 +77,7 @@ export const Star = ({ size, outlined }: ConditionalIconProps): JSX.Element => {
       <path d="M0 0h24v24H0z" fill="none" />
       <path d="M0 0h24v24H0z" fill="none" />
       <path
-        fill={theme.yellow.textColor}
+        fill={theme.textColor}
         d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
       />
     </svg>
@@ -81,6 +86,7 @@ export const Star = ({ size, outlined }: ConditionalIconProps): JSX.Element => {
 
 export const Fav = ({ size, outlined }: ConditionalIconProps): JSX.Element => {
   const s = size || 24;
+  const theme = Theme.getInstance().getTheme("yellow");
 
   if (outlined) {
     return (
@@ -117,6 +123,7 @@ export const Fav = ({ size, outlined }: ConditionalIconProps): JSX.Element => {
 
 export const ArrowBack = ({ size }: Props): JSX.Element => {
   const s = size || 24;
+  const theme = Theme.getInstance().getTheme("yellow");
 
   return (
     <svg
@@ -127,7 +134,7 @@ export const ArrowBack = ({ size }: Props): JSX.Element => {
     >
       <path d="M0 0h24v24H0z" fill="none" />
       <path
-        fill={theme.yellow.textColor}
+        fill={theme.textColor}
         d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"
       />
     </svg>

@@ -1,4 +1,4 @@
-import { GetBooksResponseType } from "@types";
+import { GetBooksResponseType, BookDescription } from "@types";
 import axios, { AxiosResponse } from "axios";
 
 interface FetchBooksProps {
@@ -39,6 +39,14 @@ export class ApiService {
     return this.api.get(
       `/volumes?q=${query}&startIndex=${startIndex}&maxResults=${maxResults}`
     );
+  };
+
+  public fetchBookInfo = async ({
+    link,
+  }: {
+    link: string;
+  }): Promise<AxiosResponse<BookDescription>> => {
+    return this.api.get(link);
   };
 }
 

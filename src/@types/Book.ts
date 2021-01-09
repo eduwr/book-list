@@ -23,6 +23,17 @@ interface DetailedImageLinks extends ImageLinks {
   extraLarge: string;
 }
 
+type SaleInfo = {
+  buyLink: string;
+  listPrice: {
+    amount: number;
+  };
+  retailPrice: {
+    amount: number;
+  };
+  saleability: string;
+};
+
 interface DetailedVolumeInfo extends Omit<VolumeInfo, "infoLink"> {
   title: string;
   publisher: string;
@@ -31,6 +42,8 @@ interface DetailedVolumeInfo extends Omit<VolumeInfo, "infoLink"> {
   pageCount: number;
   printedPageCount: number;
   imageLinks: DetailedImageLinks;
+  authors: string[];
+  description: string;
 }
 
 export interface Book {
@@ -39,6 +52,7 @@ export interface Book {
   etag: string;
   selfLink: string;
   volumeInfo: VolumeInfo;
+  saleInfo: SaleInfo;
 }
 
 export interface BookDescription extends Omit<Book, "volumeInfo"> {

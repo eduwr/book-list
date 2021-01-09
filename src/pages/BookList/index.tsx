@@ -16,14 +16,15 @@ import defaultThumb from "../../assets/defaultThumb.png";
 
 export const BookList = (): JSX.Element => {
   const [loading, setLoading] = useState(false);
-  const { push } = useHistory();
   const [query, setQuery] = useState("Harry Potter");
   const [searchSentence, setSearchSentence] = useState("Harry Potter");
-  const { data: books } = useBooksState();
   const [bookIndex, setbookIndex] = useState(0);
-  const booksDispatch = useBooksDispatch();
   const [loadingMore, setLoadingMore] = useState(false);
-  const harryPotter = "harry potter";
+
+  const { push } = useHistory();
+
+  const { data: books } = useBooksState();
+  const booksDispatch = useBooksDispatch();
 
   useEffect(() => {
     const fetchBooks = async (): Promise<void> => {
@@ -61,20 +62,24 @@ export const BookList = (): JSX.Element => {
       const response = await ApiService.getInstance().fetchBooks({
         query,
         maxResults: 12,
-        startIndex: bookIndex + 1,
+        startIndex: bookIndex + 12,
       });
 
       const currentBooks = [...books.items];
-
-      const bookSet = new Set([...currentBooks, ...response.data.items]);
 
       booksDispatch({
         type: BooksActionTypes.SET_BOOKS,
         payload: {
           ...response.data,
-          items: [...bookSet],
+          items: [
+            ...currentBooks,
+            ...response.data.items.filter(
+              (item) => !currentBooks.some((el) => el.id === item.id)
+            ),
+          ],
         },
       });
+      setbookIndex(bookIndex + 12);
     } catch (err) {
       // handle err
     } finally {
@@ -84,6 +89,18 @@ export const BookList = (): JSX.Element => {
 
   const handleSearch = (): void => {
     setQuery(searchSentence);
+    booksDispatch({
+      type: BooksActionTypes.SET_SEARCH_QUERY,
+      payload: searchSentence,
+    });
+  };
+
+  const handleSelectBook = (id: string): void => {
+    booksDispatch({
+      type: BooksActionTypes.SET_SEARCH_QUERY,
+      payload: searchSentence,
+    });
+    push(`/books/${id}`);
   };
 
   return (
@@ -106,7 +123,8 @@ export const BookList = (): JSX.Element => {
 
             return (
               <Book
-                key={book.id + book.volumeInfo.title + Math.random() * 1000}
+                key={book.id + book.volumeInfo.title}
+                onClick={() => handleSelectBook(book.id)}
               >
                 <BookCover src={imgLink} alt={book.volumeInfo?.title || ""} />
               </Book>

@@ -41,7 +41,7 @@ export const BookDetails = (): JSX.Element => {
     }
 
     setInfoLink(selectedBook.selfLink);
-  }, []);
+  }, [books.items, goBack, id]);
 
   // Method triggered when book is loaded, it fetches selected book details from google api
   useEffect(() => {

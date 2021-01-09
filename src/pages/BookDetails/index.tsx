@@ -1,16 +1,18 @@
 import { BookDescription, ButtonClickEvent } from "@types";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useBooksState } from "hooks/books";
 import { ApiService } from "services/ApiService";
 import { PageContainer } from "components/PageContainer";
 import { HeaderContainer } from "components/HeaderContainer";
-import { MenuIcon } from "components/Icons";
+import { ArrowBack } from "components/Icons";
 import { Input } from "components/SearchInput";
 import { SearchButton } from "components/SearchButton";
-import { BookCover } from "pages/BookList/styles";
+
 import { BookCard } from "components/BookCard";
 import defaultThumb from "assets/defaultThumb.png";
+
+import { BookDescriptionContainer, BookTextDescription } from "./styles";
 
 export const BookDetails = (): JSX.Element => {
   const { goBack } = useHistory();
@@ -25,6 +27,8 @@ export const BookDetails = (): JSX.Element => {
   };
   const [book, setBook] = useState<BookDescription | undefined>();
   const { searchQuery } = useBooksState();
+
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const selectedBook = books.items.find((item) => item.id === id);
@@ -62,12 +66,20 @@ export const BookDetails = (): JSX.Element => {
     };
 
     fetchBookInfo();
-  }, [infoLink]);
+  }, [infoLink, goBack]);
+
+  useEffect(() => {
+    if (ref && ref.current && book && book.volumeInfo) {
+      ref.current.innerHTML = book.volumeInfo.description;
+    }
+  }, [book?.volumeInfo.description]);
 
   return (
     <PageContainer>
       <HeaderContainer>
-        <MenuIcon />
+        <button type="button" onClick={handleGoBack}>
+          <ArrowBack />
+        </button>
         <Input value={searchQuery} readOnly disabled />
         <SearchButton />
       </HeaderContainer>
@@ -85,9 +97,11 @@ export const BookDetails = (): JSX.Element => {
         title={book?.volumeInfo.title}
         buyLink={book?.saleInfo.buyLink}
       />
-      <button type="button" onClick={handleGoBack}>
-        Go back to list
-      </button>
+      <BookDescriptionContainer ref={ref}>
+        <BookTextDescription>
+          {book?.volumeInfo.description}
+        </BookTextDescription>
+      </BookDescriptionContainer>
     </PageContainer>
   );
 };

@@ -18,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
         background-color: purple;
     }
 
-    h1, h2, h3, li {
+    h1, h2, h3 {
         color: ${theme.yellow.textColor}
     }
 
@@ -41,6 +41,12 @@ const GlobalStyle = createGlobalStyle`
     input:focus {
         outline: none;
     }
+
+    li {
+        text-decoration: dashed;
+        margin-left: 32px;
+    }
+
 `;
 
 export default GlobalStyle;

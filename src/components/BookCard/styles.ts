@@ -86,6 +86,7 @@ export const BuyButton = styled.button`
   padding: 8px 24px;
   border-radius: 24px;
   opacity: 0.85;
+  box-shadow: ${({ theme }) => theme.yellow.boxShadowBlue};
   transition: all 300ms ease;
 
   &:hover {

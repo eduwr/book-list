@@ -1,8 +1,9 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { Fav } from "components/Icons";
 import { Stars } from "components/Stars";
 import { useBooksDispatch, useBooksState } from "hooks/books";
 import { BooksActionTypes } from "context/books";
+import { ButtonClickEvent } from "@types";
 import {
   Container,
   BookCover,
@@ -75,6 +76,11 @@ export const BookCard = ({
     });
   };
 
+  const handleBuyLink = (e: ButtonClickEvent): void => {
+    e.preventDefault();
+    window.open(buyLink, "_blank");
+  };
+
   const liked = useMemo(() => likes.includes(id || ""), [id, likes]);
 
   return (
@@ -100,7 +106,9 @@ export const BookCard = ({
           </PriceWrapper>
         </RightBox>
         <ButtonsWrapper>
-          <BuyButton disabled={!!buyLink}>BUY</BuyButton>
+          <BuyButton disabled={!buyLink} onClick={handleBuyLink}>
+            BUY
+          </BuyButton>
           <LikeButton onClick={handleLike}>
             <Fav size={20} outlined={!liked} />
           </LikeButton>

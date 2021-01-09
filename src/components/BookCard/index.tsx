@@ -26,6 +26,7 @@ interface Props {
   stars?: number;
   liked?: boolean;
   buyLink?: string;
+  id?: string;
 }
 
 export const BookCard = ({
@@ -37,6 +38,7 @@ export const BookCard = ({
   title,
   liked,
   buyLink,
+  id,
 }: Props): JSX.Element => {
   // reduce authors array into a string with authors name
   const parseAuthors = (list: string[] | undefined): string => {
@@ -78,7 +80,7 @@ export const BookCard = ({
           </div>
           <PriceWrapper>
             <Price>{price ? `$ ${price?.toFixed(2)}` : "N/A"}</Price>
-            <Stars count={3} size={20} />
+            <Stars count={stars || 0} size={20} />
           </PriceWrapper>
         </RightBox>
         <ButtonsWrapper>

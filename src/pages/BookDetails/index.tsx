@@ -69,7 +69,8 @@ export const BookDetails = (): JSX.Element => {
         <SearchButton />
       </HeaderContainer>
       <BookCard
-        authors={["author 1", "author 2", "author 3"]}
+        id={book?.id}
+        authors={book?.volumeInfo.authors}
         img={book?.volumeInfo.imageLinks.smallThumbnail || defaultThumb}
         pages={book?.volumeInfo.pageCount}
         price={

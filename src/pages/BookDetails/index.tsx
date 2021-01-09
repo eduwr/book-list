@@ -1,5 +1,5 @@
 import { BookDescription, ButtonClickEvent } from "@types";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useBooksState } from "hooks/books";
 import { ApiService } from "services/ApiService";
@@ -12,7 +12,7 @@ import { SearchButton } from "components/SearchButton";
 import { BookCard } from "components/BookCard";
 import defaultThumb from "assets/defaultThumb.png";
 
-import { BookDescriptionContainer, BookTextDescription } from "./styles";
+import { BookDescriptionContainer } from "./styles";
 
 export const BookDetails = (): JSX.Element => {
   const { goBack } = useHistory();
@@ -68,11 +68,13 @@ export const BookDetails = (): JSX.Element => {
     fetchBookInfo();
   }, [infoLink, goBack]);
 
+  const description = useMemo(() => book?.volumeInfo.description, [book]);
+
   useEffect(() => {
-    if (ref && ref.current && book && book.volumeInfo) {
-      ref.current.innerHTML = book.volumeInfo.description;
+    if (ref && ref.current && description) {
+      ref.current.innerHTML = description;
     }
-  }, [book?.volumeInfo.description]);
+  }, [description]);
 
   return (
     <PageContainer>
@@ -97,11 +99,7 @@ export const BookDetails = (): JSX.Element => {
         title={book?.volumeInfo.title}
         buyLink={book?.saleInfo.buyLink}
       />
-      <BookDescriptionContainer ref={ref}>
-        <BookTextDescription>
-          {book?.volumeInfo.description}
-        </BookTextDescription>
-      </BookDescriptionContainer>
+      <BookDescriptionContainer ref={ref} />
     </PageContainer>
   );
 };

@@ -15,16 +15,16 @@ import { Book, BookCover, BookListContainer, LoadMoreBtn } from "./styles";
 import defaultThumb from "../../assets/defaultThumb.png";
 
 export const BookList = (): JSX.Element => {
+  const { data: books, searchQuery } = useBooksState();
+  const booksDispatch = useBooksDispatch();
+
   const [loading, setLoading] = useState(false);
-  const [query, setQuery] = useState("Harry Potter");
-  const [searchSentence, setSearchSentence] = useState("Harry Potter");
+  const [query, setQuery] = useState("");
+  const [searchSentence, setSearchSentence] = useState(searchQuery);
   const [bookIndex, setbookIndex] = useState(0);
   const [loadingMore, setLoadingMore] = useState(false);
 
   const { push } = useHistory();
-
-  const { data: books } = useBooksState();
-  const booksDispatch = useBooksDispatch();
 
   useLayoutEffect(() => {
     const fetchBooks = async (): Promise<void> => {
@@ -110,6 +110,11 @@ export const BookList = (): JSX.Element => {
         <Input
           value={searchSentence}
           onChange={(e) => setSearchSentence(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSearch();
+            }
+          }}
         />
         <SearchButton onClick={handleSearch} />
       </HeaderContainer>

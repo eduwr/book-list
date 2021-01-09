@@ -26,7 +26,6 @@ interface Props {
   pages?: number;
   price?: number;
   authors?: string[];
-  stars?: number;
   buyLink?: string;
   id?: string;
 }
@@ -36,7 +35,6 @@ export const BookCard = ({
   img,
   pages,
   price,
-  stars,
   title,
   buyLink,
   id,
@@ -104,7 +102,7 @@ export const BookCard = ({
           </div>
           <PriceWrapper>
             <Price>{price ? `$ ${price?.toFixed(2)}` : "N/A"}</Price>
-            <Stars count={stars || 0} size={20} />
+            <Stars size={20} id={id} />
           </PriceWrapper>
         </RightBox>
         <ButtonsWrapper>

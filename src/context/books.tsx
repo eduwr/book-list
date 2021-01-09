@@ -6,6 +6,7 @@ export enum BooksActionTypes {
   SET_BOOKS = "SET_BOOKS",
   SET_SEARCH_QUERY = "SET_SEARCH_QUERY",
   LIKE_OR_DISLIKE_BOOK = "LIKE_OR_DISLIKE_BOOK",
+  RATE_BOOK = "RATE_BOOK",
 }
 
 // Declare actions
@@ -21,6 +22,13 @@ type BooksActions =
   | {
       type: BooksActionTypes.LIKE_OR_DISLIKE_BOOK;
       payload: string;
+    }
+  | {
+      type: BooksActionTypes.RATE_BOOK;
+      payload: {
+        id: string;
+        rate: number;
+      };
     };
 
 export type Dispatch = (action: BooksActions) => void;
@@ -28,6 +36,10 @@ export type State = {
   data: GetBooksResponseType;
   searchQuery: string;
   likes: string[];
+  rateList: {
+    id: string;
+    rate: number;
+  }[];
 };
 type ProviderProps = { children: React.ReactNode };
 
@@ -62,6 +74,14 @@ const booksReducer = (state: State, action: BooksActions): State => {
         likes: [...state.likes, action.payload],
       };
 
+    case BooksActionTypes.RATE_BOOK:
+      return {
+        ...state,
+        rateList: [
+          ...state.rateList.filter((item) => item.id !== action.payload.id),
+          action.payload,
+        ],
+      };
     default:
       throw new Error("Unhandled action type");
   }
@@ -71,6 +91,7 @@ const initialState: State = {
   data: {} as GetBooksResponseType,
   searchQuery: "",
   likes: [],
+  rateList: [],
 };
 
 export const BooksProvider = ({ children }: ProviderProps): JSX.Element => {

@@ -95,7 +95,6 @@ export const BookDetails = (): JSX.Element => {
           book?.saleInfo?.listPrice?.amount ||
           undefined
         }
-        stars={book?.volumeInfo.averageRating}
         title={book?.volumeInfo.title}
         buyLink={book?.saleInfo.buyLink}
       />
